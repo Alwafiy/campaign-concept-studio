@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>Campaign Studio — AI campaign concepts</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark">CS</div>
+        <div>
+          <div class="brand-name">Campaign Studio</div>
+          <div class="brand-subtitle">Brief → concept → creative direction</div>
+        </div>
+      </div>
+      <div class="status-pill"><span></span> AI workspace</div>
+    </header>
+
+    <main class="layout">
+      <section class="panel brief-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Campaign builder</p>
+            <h1>Turn a brief into a launch-ready campaign.</h1>
+            <p class="muted">Give the studio enough context to make the concept feel specific to your product and audience.</p>
+          </div>
+        </div>
+
+        <form id="campaignForm">
+          <label>
+            Campaign brief
+            <textarea id="brief" maxlength="3000" required placeholder="Example: Launch a new everyday backpack for commuters who want a lighter, more organized workday."></textarea>
+          </label>
+
+          <label>
+            Target audience
+            <textarea id="audience" maxlength="1200" required placeholder="Who are we trying to reach? Include motivations, context, or buying triggers."></textarea>
+          </label>
+
+          <label>
+            Product / offer details
+            <textarea id="product" maxlength="2000" required placeholder="Product, differentiators, offer, price positioning, proof points, constraints..."></textarea>
+          </label>
+
+          <label>
+            Tone
+            <input id="tone" maxlength="160" required placeholder="Confident, modern, warm, slightly playful" />
+          </label>
+
+          <fieldset>
+            <legend>Desired channels</legend>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" name="channel" value="Instagram" checked><span>Instagram</span></label>
+              <label class="chip"><input type="checkbox" name="channel" value="TikTok"><span>TikTok</span></label>
+              <label class="chip"><input type="checkbox" name="channel" value="Email"><span>Email</span></label>
+              <label class="chip"><input type="checkbox" name="channel" value="Landing page"><span>Landing page</span></label>
+              <label class="chip"><input type="checkbox" name="channel" value="Paid social"><span>Paid social</span></label>
+              <label class="chip"><input type="checkbox" name="channel" value="OOH"><span>OOH</span></label>
+            </div>
+          </fieldset>
+
+          <button class="primary-button" id="generateButton" type="submit">
+            <span>Generate campaign</span>
+            <span class="arrow">↗</span>
+          </button>
+          <p class="privacy-note">Your OpenAI key stays on the server. The browser only calls <code>/api/campaign</code>.</p>
+        </form>
+      </section>
+
+      <section class="panel results-panel" aria-live="polite">
+        <div id="emptyState" class="empty-state">
+          <div class="empty-orbit">✦</div>
+          <h2>Your campaign canvas is ready.</h2>
+          <p>Fill out the brief and generate a campaign concept, copy variants, launch checklist, and visual direction.</p>
+        </div>
+
+        <div id="loadingState" class="loading-state hidden">
+          <div class="spinner"></div>
+          <h2>Building your campaign…</h2>
+          <p>Strategy first, then creative direction and visuals.</p>
+          <div class="progress-lines"><i></i><i></i><i></i></div>
+        </div>
+
+        <div id="errorState" class="error-state hidden">
+          <div class="error-icon">!</div>
+          <h2>Something went wrong</h2>
+          <p id="errorText">Please try again.</p>
+          <button id="retryButton" class="secondary-button">Try again</button>
+        </div>
+
+        <div id="results" class="results hidden">
+          <div class="result-hero">
+            <div>
+              <p class="eyebrow">Campaign concept</p>
+              <h2 id="conceptName"></h2>
+              <p class="one-liner" id="conceptOneLiner"></p>
+            </div>
+            <button id="copyConcept" class="icon-button" title="Copy concept">Copy</button>
+          </div>
+
+          <div class="insight-grid">
+            <article class="insight-card">
+              <span>Why it works</span>
+              <p id="conceptRationale"></p>
+            </article>
+            <article class="insight-card">
+              <span>Creative direction</span>
+              <p id="creativeDirection"></p>
+            </article>
+          </div>
+
+          <div class="section">
+            <div class="section-title"><span>01</span><h3>Copy variants</h3></div>
+            <div id="variants" class="variant-grid"></div>
+          </div>
+
+          <div class="section">
+            <div class="section-title"><span>02</span><h3>Launch checklist</h3></div>
+            <div id="checklist" class="checklist"></div>
+          </div>
+
+          <div class="section">
+            <div class="section-title"><span>03</span><h3>Visual direction</h3></div>
+            <div id="images" class="image-grid"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="/app.js" defer></script>
+</body>
+</html>
